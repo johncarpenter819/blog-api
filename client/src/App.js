@@ -1,0 +1,53 @@
+import React, { useEffect, useState } from "react";
+import { fetchUsers, fetchPosts } from "./services/api";
+import UserList from "./components/UserList/UserList";
+import PostList from "./components/PostList/PostList";
+import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
+import Login from "./pages/Login/Login";
+import Signup from "./pages/Signup/Signup";
+import Home from "./components/Home/Home";
+import "@fontsource/libertinus-keyboard";
+import { Route, Routes } from "react-router-dom";
+import "./App.css";
+
+function App() {
+  const [users, setUsers] = useState([]);
+  const [posts, setPosts] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    Promise.all([fetchUsers(), fetchPosts()])
+      .then(([userData, postData]) => {
+        setUsers(userData.users || []);
+        setPosts(postData.posts || []);
+        setLoading(false);
+      })
+      .catch((err) => {
+        console.error(err);
+        setUsers([]);
+        setPosts([]);
+        setLoading(false);
+      });
+  }, []);
+
+  if (loading) return <p>Loading...</p>;
+
+  return (
+    <>
+      <Navbar />
+      <div className="page-content">
+        <Routes>
+          <Route path="/" element={<Home posts={posts} />} />
+          <Route path="/posts" element={<PostList posts={posts} />} />
+          <Route path="/users" element={<UserList users={users} />} />
+          {/* <Route path="/about" element={<About />} /> */}
+          <Route path="/login" element={<Login />} />
+          <Route path="/signup" element={<Signup />} />
+        </Routes>
+      </div>
+      <Footer />
+    </>
+  );
+}
+export default App;

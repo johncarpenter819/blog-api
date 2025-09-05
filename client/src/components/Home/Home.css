@@ -1,0 +1,65 @@
+.home-page {
+  padding: 2rem;
+  font-family: Arial, sans-serif;
+}
+.trending {
+  margin-bottom: 3rem;
+}
+.trending h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.trending-subsection {
+  margin-bottom: 2rem;
+}
+.trending-subsection h3 {
+  font-size: 1.25rem;
+  margin-bottom: 0.75rem;
+}
+.trending-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, mixmax(180px, 1fr));
+  gap: 1rem;
+}
+.trending-card {
+  display: block;
+  background: #fff;
+  border-radius: 10px;
+  padding: 1rem;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.trending-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.categories {
+  margin-top: 3rem;
+}
+.categories h2 {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+.category-cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.category-card {
+  flex: 1 1 150px;
+  text-align: center;
+  background: #f7f7f7;
+  pad: 1rem;
+  border-radius: 8px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 600;
+  transition: background 0.2s ease, tranform 0.2s ease;
+}
+.category-card:hover {
+  background: #eaeaea;
+  transform: scale(1.05);
+}

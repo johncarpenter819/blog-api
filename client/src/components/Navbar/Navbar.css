@@ -1,0 +1,103 @@
+* {
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.navbar {
+  display: flex;
+  align-items: center;
+  padding: 1rem 2rem;
+  color: #fff;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  justify-content: space-between;
+  background-image: url(./login-bg.jpg);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.logo {
+  font-size: 2rem;
+  font-weight: 900;
+  font-family: "Libertinus Keyboard", sans-serif;
+  color: #fff;
+  background: linear-gradient(45deg, #61dafb, #02ff23);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+.logo:hover {
+  transform: scale(1.1) rotate(-5deg);
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.6), 0 0 10px #61dafb,
+    0 0 20px #02ff23;
+}
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+  margin: 0 auto;
+  display: flex;
+  transform: translateX(150px);
+}
+.nav-links a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  font-weight: 700;
+  transition: all 0.2 ease;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  transition: all 0.3s ease;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  margin: 0 auto;
+  transform: translate(-10px);
+}
+.nav-links a:hover {
+  transform: scale(1.1);
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.6), 0 0 10px #61dafb,
+    0 0 20px #02ff23;
+  color: #61dafb;
+}
+.nav-cta {
+  display: flex;
+  gap: 1rem;
+  margin-left: auto;
+}
+.login-button,
+.sign-up-button {
+  padding: 0.5rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-weight: 700;
+  font-family: "Libertinus Keyboard", system-ui, sans-serif;
+  background: transparent;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-clip: padding-box;
+  position: relative;
+  overflow: hidden;
+}
+.login-button span,
+.sign-up-button span {
+  background: linear-gradient(45deg, #61dafb, #02ff23);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease;
+}
+.login-button:hover span,
+.sign-up-button:hover span {
+  transform: scale(1.1);
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.6), 0 0 10px #61dafb,
+    0 0 20px #02ff23;
+}
+.login-button:hover,
+.sign-up-button:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-color: #61dafb;
+}
