@@ -101,3 +101,33 @@
   background-color: rgba(0, 0, 0, 0.5);
   border-color: #61dafb;
 }
+.logout-button {
+  padding: 0.5rem 1rem;
+  border: 2px solid transparent;
+  border-radius: 8px;
+  font-weight: 700;
+  font-family: "Libertinus Keyboard", system-ui, sans-serif;
+  background: transparent;
+  color: #fff;
+  text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  cursor: pointer;
+  background-clip: padding-box;
+  position: relative;
+  overflow: hidden;
+}
+.logout-button span {
+  background: linear-gradient(45deg, #61dafb, #02ff23);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  transition: all 0.3s ease;
+}
+.logout-button:hover span {
+  transform: scale(1.1);
+  text-shadow: 2px 2px 12px rgba(0, 0, 0, 0.6), 0 0 10px #61dafb,
+    0 0 20px #02ff23;
+}
+.logout-button:hover {
+  background-color: rgba(0, 0, 0, 0.5);
+  border-color: #61dafb;
+}

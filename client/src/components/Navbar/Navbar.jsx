@@ -2,7 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 import "./Navbar.css";
 
-const Navbar = () => {
+const Navbar = ({ user, setUser }) => {
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    setUser(null);
+  };
+
   return (
     <nav className="navbar">
       <div className="logo">Level UP</div>
@@ -21,12 +26,20 @@ const Navbar = () => {
         </li>
       </ul>
       <div className="nav-cta">
-        <Link to="/login" className="login-button">
-          <span>Login</span>
-        </Link>
-        <Link to="/signup" className="sign-up-button">
-          <span>Sign Up</span>
-        </Link>
+        {!user ? (
+          <>
+            <Link to="/login" className="login-button">
+              <span>Login</span>
+            </Link>
+            <Link to="/signup" className="sign-up-button">
+              <span>Sign Up</span>
+            </Link>
+          </>
+        ) : (
+          <button onClick={handleLogout} className="logout-button">
+            <span>Logout</span>
+          </button>
+        )}
       </div>
     </nav>
   );

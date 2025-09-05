@@ -16,6 +16,8 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
 
+  const [user, setUser] = useState(null);
+
   useEffect(() => {
     Promise.all([fetchUsers(), fetchPosts()])
       .then(([userData, postData]) => {
@@ -29,20 +31,25 @@ function App() {
         setPosts([]);
         setLoading(false);
       });
+
+    const token = localStorage.getItem("token");
+    if (token) {
+      setUser({ token });
+    }
   }, []);
 
   if (loading) return <p>Loading...</p>;
 
   return (
     <>
-      <Navbar />
+      <Navbar user={user} setUser={setUser} />
       <div className="page-content">
         <Routes>
           <Route path="/" element={<Home posts={posts} />} />
           <Route path="/posts" element={<PostList posts={posts} />} />
           <Route path="/users" element={<UserList users={users} />} />
+          <Route path="/login" element={<Login setUser={setUser} />} />
           {/* <Route path="/about" element={<About />} /> */}
-          <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
         </Routes>
       </div>
