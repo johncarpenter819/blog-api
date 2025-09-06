@@ -15,14 +15,14 @@ function App() {
   const [users, setUsers] = useState([]);
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [user, setUser] = useState(null);
 
   useEffect(() => {
     Promise.all([fetchUsers(), fetchPosts()])
       .then(([userData, postData]) => {
+        console.log("Fetched posts", postData);
         setUsers(userData.users || []);
-        setPosts(postData.posts || []);
+        setPosts(postData || []);
         setLoading(false);
       })
       .catch((err) => {
@@ -33,10 +33,15 @@ function App() {
       });
 
     const token = localStorage.getItem("token");
-    if (token) {
-      setUser({ token });
+    const storedUser = localStorage.getItem("user");
+    if (token && storedUser) {
+      setUser({ token, ...JSON.parse(storedUser) });
     }
   }, []);
+
+  const handlePostCreated = (newPost) => {
+    setPosts((prevPosts) => [newPost, ...prevPosts]);
+  };
 
   if (loading) return <p>Loading...</p>;
 
@@ -46,7 +51,16 @@ function App() {
       <div className="page-content">
         <Routes>
           <Route path="/" element={<Home posts={posts} />} />
-          <Route path="/posts" element={<PostList posts={posts} />} />
+          <Route
+            path="/posts"
+            element={
+              <PostList
+                posts={posts}
+                user={user}
+                onPostCreated={handlePostCreated}
+              />
+            }
+          />
           <Route path="/users" element={<UserList users={users} />} />
           <Route path="/login" element={<Login setUser={setUser} />} />
           {/* <Route path="/about" element={<About />} /> */}
