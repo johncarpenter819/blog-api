@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { fetchUsers, fetchPosts } from "./services/api";
 import UserList from "./components/UserList/UserList";
-import PostList from "./components/PostList/PostList";
+import PostPage from "./pages/Post/Post";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
-import Home from "./components/Home/Home";
+import Home from "./pages/Home/Home";
 import "@fontsource/libertinus-keyboard";
 import { Route, Routes } from "react-router-dom";
 import "./App.css";
@@ -48,25 +48,25 @@ function App() {
   return (
     <>
       <Navbar user={user} setUser={setUser} />
-      <div className="page-content">
-        <Routes>
-          <Route path="/" element={<Home posts={posts} />} />
-          <Route
-            path="/posts"
-            element={
-              <PostList
-                posts={posts}
-                user={user}
-                onPostCreated={handlePostCreated}
-              />
-            }
-          />
-          <Route path="/users" element={<UserList users={users} />} />
-          <Route path="/login" element={<Login setUser={setUser} />} />
-          {/* <Route path="/about" element={<About />} /> */}
-          <Route path="/signup" element={<Signup />} />
-        </Routes>
-      </div>
+      {/* <div className="page-content"> */}
+      <Routes>
+        <Route path="/" element={<Home posts={posts} />} />
+        <Route
+          path="/posts"
+          element={
+            <PostPage
+              posts={posts}
+              user={user}
+              onPostCreated={handlePostCreated}
+            />
+          }
+        />
+        <Route path="/users" element={<UserList users={users} />} />
+        <Route path="/login" element={<Login setUser={setUser} />} />
+        {/* <Route path="/about" element={<About />} /> */}
+        <Route path="/signup" element={<Signup />} />
+      </Routes>
+      {/* </div> */}
       <Footer />
     </>
   );

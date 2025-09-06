@@ -1,6 +1,7 @@
 .home-page {
   padding: 2rem;
   font-family: Arial, sans-serif;
+  background-image: url(./content-bg.jpg);
 }
 .trending {
   margin-bottom: 3rem;

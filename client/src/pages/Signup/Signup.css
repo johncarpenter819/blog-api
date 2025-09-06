@@ -1,4 +1,8 @@
 .signup-page {
+  background-image: url(./signup-bg.jpg);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
   display: flex;
   justify-content: center;
   align-items: center;
