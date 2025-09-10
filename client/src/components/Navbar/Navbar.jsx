@@ -36,9 +36,14 @@ const Navbar = ({ user, setUser }) => {
             </Link>
           </>
         ) : (
-          <button onClick={handleLogout} className="logout-button">
-            <span>Logout</span>
-          </button>
+          <>
+            <span className="username-display">
+              Player One: {user.username}
+            </span>
+            <button onClick={handleLogout} className="logout-button">
+              <span>Logout</span>
+            </button>
+          </>
         )}
       </div>
     </nav>

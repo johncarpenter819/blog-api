@@ -1,10 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { fetchComments, createPost } from "../../services/api";
+
+import {
+  fetchComments,
+  createPost,
+  updatePost,
+  deletePost,
+  reactToPost,
+  createComment,
+} from "../../services/api";
 import PostList from "../../components/PostList/PostList";
-import "../../components/PostList/PostList";
 import "./Post.css";
 
-const PostPage = ({ posts, user, onPostCreated }) => {
+const PostPage = ({ posts, user, onPostCreated, setPosts }) => {
   const [comments, setComments] = useState({});
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
@@ -13,6 +20,7 @@ const PostPage = ({ posts, user, onPostCreated }) => {
 
   useEffect(() => {
     if (!posts.length) return;
+
     posts.forEach((post) => {
       if (!comments[post.id]) {
         fetchComments(post.id)
@@ -22,6 +30,7 @@ const PostPage = ({ posts, user, onPostCreated }) => {
     });
   }, [posts, comments]);
 
+  // Create a new post
   const handleCreatePost = async (e) => {
     e.preventDefault();
     if (!title || !content) return;
@@ -47,10 +56,81 @@ const PostPage = ({ posts, user, onPostCreated }) => {
     }
   };
 
+  // Update a post
+  const handlePostUpdated = async (updatedPost) => {
+    try {
+      const response = await updatePost(
+        updatedPost.id,
+        updatedPost,
+        user.token
+      );
+      setPosts((currentPosts) =>
+        currentPosts.map((post) =>
+          post.id === updatedPost.id ? { ...post, ...response } : post
+        )
+      );
+    } catch (err) {
+      console.error("Failed to update post", err);
+    }
+  };
+
+  // Delete a post
+  const handlePostDeleted = async (postId) => {
+    try {
+      await deletePost(postId, user.token);
+      setPosts((currentPosts) =>
+        currentPosts.filter((post) => post.id !== postId)
+      );
+    } catch (err) {
+      console.error("Failed to delete post:", err);
+    }
+  };
+
+  // React to a post
+  const handlePostReacted = (updatedPost) => {
+    const postWithAuthor = {
+      ...updatedPost,
+      author:
+        updatedPost.author ||
+        posts.find((p) => p.id === updatedPost.id)?.author,
+    };
+
+    setPosts((currentPosts) =>
+      currentPosts.map((post) =>
+        post.id === updatedPost.id ? postWithAuthor : post
+      )
+    );
+  };
+
+  const handleCommentAdded = async (postId, text) => {
+    if (!user) return;
+
+    try {
+      const newComment = await createComment(postId, text, user.token);
+      setComments((prev) => ({
+        ...prev,
+        [postId]: [...(prev[postId] || []), newComment],
+      }));
+    } catch (err) {
+      console.error("Failed to add comment:", err);
+    }
+  };
+
+  const handleCommentDeleted = (postId, commentId) => {
+    setComments((prev) => {
+      const existing = prev?.[postId] || [];
+      const updated =
+        prev[postId]?.filter((comment) => comment.id !== commentId) || [];
+      return { ...prev, [postId]: updated };
+    });
+  };
+
   return (
     <main className="post-page">
       <div className="post-list">
         <h1>Posts</h1>
+
+        {/* Create Post Form */}
         <section className="create-post-section">
           <h2>Create a Post</h2>
           {user ? (
@@ -76,7 +156,17 @@ const PostPage = ({ posts, user, onPostCreated }) => {
           )}
         </section>
 
-        <PostList posts={posts} comments={comments} />
+        {/* Post List */}
+        <PostList
+          posts={posts}
+          comments={comments}
+          user={user}
+          onPostUpdated={handlePostUpdated}
+          onPostDeleted={handlePostDeleted}
+          onPostReacted={handlePostReacted}
+          onCommentAdded={handleCommentAdded}
+          onCommentDeleted={handleCommentDeleted}
+        />
       </div>
     </main>
   );

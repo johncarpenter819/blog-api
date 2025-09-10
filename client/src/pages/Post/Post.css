@@ -110,3 +110,137 @@
   font-style: italic;
   color: #666;
 }
+
+/* Still need to style actions */
+.post-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+.post-actions button {
+  padding: 0.4rem 0.8rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  background: linear-gradient(45deg, #61dafb, #02ff23);
+  color: #fff;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.post-actions button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(97, 218, 251, 0.6);
+}
+.post-reactions {
+  display: flex;
+  gap: 1.5rem;
+  margin-top: 1rem;
+}
+.post-reactions button {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  padding: 4px 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+.post-reactions svg {
+  width: 22px;
+  height: 22px;
+  color: #888;
+  transition: transform 0.2s ease, color 0.3s ease;
+}
+.post-reactions button.like.active svg {
+  color: blue;
+}
+.post-reactions button.love.active svg {
+  color: red;
+}
+.post-reactions button.hate.active svg {
+  color: black;
+}
+.post-reactions button.repost.active svg {
+  color: green;
+}
+.post-reactions button:hover {
+  background-color: rgba(97, 218, 251, 0.1);
+  transform: scale(1.2);
+}
+.post-reactions button.active svg {
+  color: #02ff23;
+  transform: scale(1.2);
+}
+.add-comment {
+  display: flex;
+  gap: 8px;
+  margin-top: 1rem;
+}
+.add-comment input {
+  flex: 1;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+  font-family: inherit;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+.add-comment input:focus {
+  border-color: #61dafb;
+  box-shadow: 0 0 6px rgba(97, 218, 251, 0.5);
+  outline: none;
+}
+.add-comment button {
+  padding: 0.5rem 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  background: linear-gradient(45deg, #61dafb, #02ff23);
+  color: #fff;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.add-comment button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 4px 12px rgba(97, 218, 251, 0.6);
+}
+.comment-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.comment-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  background-color: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  transition: background-color 0.2s;
+}
+.comment-item:hover {
+  background-color: #e9e9e9;
+}
+.comment-item p {
+  margin: 0;
+  font-size: 14px;
+  color: #333;
+}
+.delete-comment-btn {
+  font-size: 12px;
+  color: #fff;
+  background-color: #c93120;
+  border: none;
+  border-radius: 8px;
+  padding: 3px 6px;
+  cursor: pointer;
+  transition: background-color 0.2;
+}
+.delete-comment-btn:hover {
+  background-color: #fd1900;
+}

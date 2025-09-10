@@ -7,8 +7,10 @@ import Footer from "./components/Footer/Footer";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import Home from "./pages/Home/Home";
+import PostDetail from "./pages/Post/PostDetail";
 import "@fontsource/libertinus-keyboard";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 import "./App.css";
 
 function App() {
@@ -16,6 +18,7 @@ function App() {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     Promise.all([fetchUsers(), fetchPosts()])
@@ -32,11 +35,59 @@ function App() {
         setLoading(false);
       });
 
-    const token = localStorage.getItem("token");
-    const storedUser = localStorage.getItem("user");
+    const token = sessionStorage.getItem("token");
+    const storedUser = sessionStorage.getItem("user");
     if (token && storedUser) {
       setUser({ token, ...JSON.parse(storedUser) });
     }
+  }, []);
+
+  useEffect(() => {
+    const token = sessionStorage.getItem("token");
+    if (!token) {
+      return;
+    }
+
+    try {
+      const decodeedToken = jwtDecode(token);
+      const currentTime = Date.now() / 1000;
+
+      if (decodeedToken.exp < currentTime) {
+        setUser(null);
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
+        navigate("/login");
+        return;
+      }
+
+      const timeUntilExpiration = (decodeedToken.exp - currentTime) * 1000;
+
+      const timer = setTimeout(() => {
+        setUser(null);
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
+        navigate("/login");
+        console.log("Session expired. Redirecting to login.");
+      }, timeUntilExpiration);
+
+      return () => clearTimeout(timer);
+    } catch (error) {
+      console.error("Failed to decode token", error);
+      setUser(null);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
+      navigate("/login");
+    }
+  }, [user, navigate]);
+
+  useEffect(() => {
+    const handleTabClose = () => {
+      setUser(null);
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
+    };
+    window.addEventListener("beforeunload", handleTabClose);
+    return () => window.removeEventListener("beforeunload", handleTabClose);
   }, []);
 
   const handlePostCreated = (newPost) => {
@@ -58,6 +109,7 @@ function App() {
               posts={posts}
               user={user}
               onPostCreated={handlePostCreated}
+              setPosts={setPosts}
             />
           }
         />
@@ -65,6 +117,7 @@ function App() {
         <Route path="/login" element={<Login setUser={setUser} />} />
         {/* <Route path="/about" element={<About />} /> */}
         <Route path="/signup" element={<Signup />} />
+        <Route path="/posts/:id" element={<PostDetail />} />
       </Routes>
       {/* </div> */}
       <Footer />

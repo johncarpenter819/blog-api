@@ -6,8 +6,6 @@ const Home = ({ posts }) => {
     .sort((a, b) => b.comments?.length - a.comments?.length)
     .slice(0, 4);
 
-  const editorsPick = posts.filter((p) => p.editorsPick).slice(0, 4);
-
   const highestRated = [...posts]
     .sort((a, b) => b.rating - a.rating)
     .slice(0, 4);
@@ -21,7 +19,6 @@ const Home = ({ posts }) => {
       <section className="trending">
         <h2>Trending</h2>
         <TrendingSubsection title="Most Discussed" posts={mostDiscussed} />
-        <TrendingSubsection title="Editor's Pick" posts={editorsPick} />
         <TrendingSubsection title="Highest Rated" posts={highestRated} />
         <TrendingSubsection title="New & Noteworthy" posts={newPosts} />
       </section>
@@ -36,8 +33,10 @@ const TrendingSubsection = ({ title, posts }) => {
       <h3>{title}</h3>
       <div className="trending-cards">
         {posts.map((post) => (
-          <a key={post.id} href={`/post/${post.id}`} className="trending-card">
-            {post.title}
+          <a key={post.id} href={`/posts/${post.id}`} className="trending-card">
+            <h4>{post.title}</h4>
+            <p className="card-author">By: {post.author?.username}</p>
+            <p className="card-content">{post.content.substring(0, 80)}...</p>
           </a>
         ))}
       </div>

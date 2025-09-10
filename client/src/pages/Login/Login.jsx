@@ -20,17 +20,13 @@ function Login({ setUser }) {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Login failed");
 
-      localStorage.setItem("token", data.token);
-      localStorage.setItem(
+      sessionStorage.setItem("token", data.token);
+      sessionStorage.setItem(
         "user",
-        JSON.stringify({ email: data.email, username: data.username })
+        JSON.stringify({ email: data.user.email, username: data.user.username })
       );
 
-      setUser({
-        token: data.token,
-        email: data.email,
-        username: data.username,
-      });
+      setUser({ ...data.user, token: data.token });
 
       navigate("/");
     } catch (err) {

@@ -3,7 +3,7 @@ const prisma = require("../prismaClient");
 const getAllPosts = async (req, res) => {
   try {
     const posts = await prisma.post.findMany({
-      include: { author: true, comments: true },
+      include: { author: true, comments: true, reactions: true },
       orderBy: { createdAt: "desc" },
     });
     res.json(posts);
@@ -20,7 +20,7 @@ const getPostById = async (req, res) => {
     const { id } = req.params;
     const post = await prisma.post.findUnique({
       where: { id: parseInt(id) },
-      include: { author: true, comments: true },
+      include: { author: true, comments: true, reactions: true },
     });
     if (!post) return res.status(404).json({ message: "Post not found" });
     res.json(post);

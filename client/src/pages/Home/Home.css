@@ -1,14 +1,23 @@
 .home-page {
-  padding: 2rem;
+  padding: 4rem 2rem;
   font-family: Arial, sans-serif;
   background-image: url(./content-bg.jpg);
+  color: #333;
 }
 .trending {
   margin-bottom: 3rem;
+  border-radius: 12px;
+  background-color: #ffffff;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+  padding: 2rem;
 }
 .trending h2 {
-  font-size: 2rem;
-  margin-bottom: 1rem;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #2c3e50;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 0.5rem;
+  font-weight: 700;
 }
 .trending-subsection {
   margin-bottom: 2rem;
@@ -16,27 +25,53 @@
 .trending-subsection h3 {
   font-size: 1.25rem;
   margin-bottom: 0.75rem;
+  font-weight: 600;
+  color: #34495e;
+}
+.trending-card {
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 1.5rem;
+  text-decoration: none;
+  color: #333;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease, box-shadow 0.2s ease,
+    background-color 0.2s ease;
+  min-height: 120px;
+  justify-content: center;
 }
 .trending-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fill, mixmax(180px, 1fr));
-  gap: 1rem;
-}
-.trending-card {
-  display: block;
-  background: #fff;
-  border-radius: 10px;
-  padding: 1rem;
-  text-decoration: none;
-  color: #333;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 1.5rem;
 }
 .trending-card:hover {
   transform: translateY(-5px);
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  background-color: #f7f9fc;
 }
-
+.trending-card h4 {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: #3498db;
+}
+.trending-card .card-author {
+  font-size: 0.9rem;
+  color: #7f8c8d;
+  margin-bottom: 1rem;
+}
+.trending-card .card-content {
+  font-size: 1rem;
+  color: #555;
+  white-space: normal;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
 .categories {
   margin-top: 3rem;
 }
@@ -53,12 +88,12 @@
   flex: 1 1 150px;
   text-align: center;
   background: #f7f7f7;
-  pad: 1rem;
+  padding: 1rem;
   border-radius: 8px;
   text-decoration: none;
   color: #333;
   font-weight: 600;
-  transition: background 0.2s ease, tranform 0.2s ease;
+  transition: background 0.2s ease, transform 0.2s ease;
 }
 .category-card:hover {
   background: #eaeaea;

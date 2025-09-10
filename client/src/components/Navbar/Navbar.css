@@ -131,3 +131,13 @@
   background-color: rgba(0, 0, 0, 0.5);
   border-color: #61dafb;
 }
+.username-display {
+  color: white;
+  font-weight: 700;
+  font-size: 1.1rem;
+  margin-right: 1rem;
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
