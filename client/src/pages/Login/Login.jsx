@@ -8,10 +8,16 @@ function Login({ setUser }) {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
+  const API_URL =
+    import.meta.env.VITE_API_URL ||
+    (import.meta.env.MODE === "development"
+      ? "http://localhost:5000/api/auth"
+      : "https://blog-api-s5t6-izywwtuj4-johncarpenter819s-projects.vercel.app/api/auth");
+
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch("/api/auth/login", {
+      const res = await fetch(`${API_URL}/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
