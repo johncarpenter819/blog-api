@@ -8,12 +8,6 @@ function Login({ setUser }) {
   const [error, setError] = useState("");
   const navigate = useNavigate();
 
-  const API_URL =
-    import.meta.env.VITE_API_URL ||
-    (import.meta.env.MODE === "development"
-      ? "http://localhost:5000/api/auth"
-      : "https://blog-api-s5t6-izywwtuj4-johncarpenter819s-projects.vercel.app/api/auth");
-
   const handleLogin = async (e) => {
     e.preventDefault();
     try {

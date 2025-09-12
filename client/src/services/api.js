@@ -1,4 +1,30 @@
-const API_URL = "/api";
+const API_URL =
+  import.meta.env.VITE_API_URL ||
+  (import.meta.env.MODE === "development"
+    ? "http://localhost:5000/api"
+    : "https://blog-api-s5t6-izywwtuj4-johncarpenter819s-projects.vercel.app/api");
+
+export const loginUser = async (email, password) => {
+  const res = await fetch(`${API_URL}/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ email, password }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Login failed");
+  return data;
+};
+
+export const signupUser = async (userData) => {
+  const res = await fetch(`${API_URL}/auth/signup`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(userData),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message || "Signup failed");
+  return data;
+};
 
 export const fetchUsers = async () => {
   const res = await fetch(`${API_URL}/users`);
@@ -20,7 +46,7 @@ export const fetchComments = async (postId) => {
 
 export const fetchProtectedData = async () => {
   const token = localStorage.getItem("token");
-  const res = await fetch("/api/protected", {
+  const res = await fetch(`${API_URL}/protected`, {
     headers: { Authorization: `Bearer ${token}` },
   });
   return res.json();
@@ -119,7 +145,7 @@ export const createComment = async (postId, text, token) => {
 };
 
 export const addComment = async (postId, text, token) => {
-  const res = await fetch(`/api/comments`, {
+  const res = await fetch(`${API_URL}/comments`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
