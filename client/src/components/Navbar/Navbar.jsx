@@ -21,9 +21,6 @@ const Navbar = ({ user, setUser }) => {
         <li>
           <Link to="/users">Users</Link>
         </li>
-        <li>
-          <Link to="/about">About</Link>
-        </li>
       </ul>
       <div className="nav-cta">
         {!user ? (

@@ -117,3 +117,15 @@ export const createComment = async (postId, text, token) => {
   if (!res.ok) throw new Error("Failed to create comment");
   return res.json();
 };
+
+export const addComment = async (postId, text, token) => {
+  const res = await fetch(`/api/comments`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ postId, text }),
+  });
+  return res.json();
+};

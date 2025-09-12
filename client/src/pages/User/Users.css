@@ -1,0 +1,91 @@
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.users-page {
+  background-image: url(./users-bg.jpg);
+}
+.user-page {
+  padding: 2rem;
+  max-width: 1000px;
+  margin: 0 auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+.user-list {
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+.user-search {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  margin-bottom: 1.5rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  transition: all 0.3s ease;
+}
+.user-search:focus {
+  outline: none;
+  border-color: #007bff;
+  box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
+}
+.user-item {
+  padding: 0.5rem 1rem;
+  margin: 0.4rem 0;
+  border-radius: 8px;
+  background: #fff;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid transparent;
+}
+.user-item:hover {
+  color: #f0f8ff;
+  border-color: #007bff;
+  transform: translateY(-1px);
+  color: black;
+}
+.no-users {
+  color: #888;
+  font-style: italic;
+  text-align: center;
+  margin-top: 1rem;
+}
+.user-post {
+  padding: 2rem;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+}
+.back-btn {
+  display: inline-block;
+  background: #007bff;
+  color: #fff;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.95rem;
+  cursor: pointer;
+  margin-bottom: 1.5rem;
+  transition: background 0.3s ease;
+}
+.back-btn:hover {
+  background: #0056b3;
+}
+.user-post-title {
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 600;
+  border-bottom: 2px solid #d3d3d3;
+  padding-bottom: 0.5rem;
+  color: #222;
+}
+.no-posts {
+  color: #888;
+  text-align: center;
+  font-style: italic;
+  margin-top: 1rem;
+}

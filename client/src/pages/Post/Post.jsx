@@ -12,23 +12,10 @@ import PostList from "../../components/PostList/PostList";
 import "./Post.css";
 
 const PostPage = ({ posts, user, onPostCreated, setPosts }) => {
-  const [comments, setComments] = useState({});
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-
-  useEffect(() => {
-    if (!posts.length) return;
-
-    posts.forEach((post) => {
-      if (!comments[post.id]) {
-        fetchComments(post.id)
-          .then((data) => setComments((prev) => ({ ...prev, [post.id]: data })))
-          .catch(console.error);
-      }
-    });
-  }, [posts, comments]);
 
   // Create a new post
   const handleCreatePost = async (e) => {
@@ -102,27 +89,29 @@ const PostPage = ({ posts, user, onPostCreated, setPosts }) => {
     );
   };
 
-  const handleCommentAdded = async (postId, text) => {
-    if (!user) return;
-
-    try {
-      const newComment = await createComment(postId, text, user.token);
-      setComments((prev) => ({
-        ...prev,
-        [postId]: [...(prev[postId] || []), newComment],
-      }));
-    } catch (err) {
-      console.error("Failed to add comment:", err);
-    }
+  const handleCommentAdded = (postId, newComment) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId
+          ? { ...post, comments: [...(post.comments || []), newComment] }
+          : post
+      )
+    );
   };
 
   const handleCommentDeleted = (postId, commentId) => {
-    setComments((prev) => {
-      const existing = prev?.[postId] || [];
-      const updated =
-        prev[postId]?.filter((comment) => comment.id !== commentId) || [];
-      return { ...prev, [postId]: updated };
-    });
+    setPosts((prevPost) =>
+      prevPost.map((post) =>
+        post.id === postId
+          ? {
+              ...post,
+              comments: (post.comments || []).filter(
+                (comment) => comment.id !== commentId
+              ),
+            }
+          : post
+      )
+    );
   };
 
   return (
@@ -159,7 +148,6 @@ const PostPage = ({ posts, user, onPostCreated, setPosts }) => {
         {/* Post List */}
         <PostList
           posts={posts}
-          comments={comments}
           user={user}
           onPostUpdated={handlePostUpdated}
           onPostDeleted={handlePostDeleted}

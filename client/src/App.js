@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
-import { fetchUsers, fetchPosts } from "./services/api";
-import UserList from "./components/UserList/UserList";
+import { fetchUsers, fetchPosts, updatePost } from "./services/api";
 import PostPage from "./pages/Post/Post";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
 import Login from "./pages/Login/Login";
 import Signup from "./pages/Signup/Signup";
 import Home from "./pages/Home/Home";
+import Users from "./pages/User/Users";
 import PostDetail from "./pages/Post/PostDetail";
 import "@fontsource/libertinus-keyboard";
 import { Route, Routes, useNavigate } from "react-router-dom";
@@ -78,20 +78,56 @@ function App() {
       sessionStorage.removeItem("user");
       navigate("/login");
     }
-  }, [user, navigate]);
+  }, [navigate]);
 
   useEffect(() => {
     const handleTabClose = () => {
-      setUser(null);
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("user");
+      const perfEntries = performance.getEntriesByType("navigation");
+      const isReload =
+        perfEntries.length > 0 && perfEntries[0].type === "reload";
+
+      if (!isReload) {
+        setUser(null);
+        sessionStorage.removeItem("token");
+        sessionStorage.removeItem("user");
+      }
     };
+
     window.addEventListener("beforeunload", handleTabClose);
     return () => window.removeEventListener("beforeunload", handleTabClose);
   }, []);
 
   const handlePostCreated = (newPost) => {
     setPosts((prevPosts) => [newPost, ...prevPosts]);
+  };
+
+  const handlePostUpdate = (updatedPost) => {
+    setPosts((prev) =>
+      prev.map((p) => (p.id === updatedPost.id ? updatedPost : p))
+    );
+  };
+
+  const handlePostDeleted = (postId) =>
+    setPosts((prev) => prev.filter((p) => p.id !== postId));
+
+  const handleCommentAdded = (postId, newComment) => {
+    setPosts((prevPosts) =>
+      prevPosts.map((post) =>
+        post.id === postId
+          ? { ...post, comments: [...(post.comments || []), newComment] }
+          : post
+      )
+    );
+  };
+
+  const handlePostReacted = (updatedPost) => {
+    setPosts((prevPost) =>
+      prevPost.map((p) =>
+        p.id === updatedPost.id
+          ? { ...updatedPost, comments: p.comments || [] }
+          : p
+      )
+    );
   };
 
   if (loading) return <p>Loading...</p>;
@@ -109,11 +145,27 @@ function App() {
               posts={posts}
               user={user}
               onPostCreated={handlePostCreated}
+              onPostUpdated={handlePostUpdate}
+              onPostDeleted={handlePostDeleted}
+              onCommentAdded={handleCommentAdded}
               setPosts={setPosts}
             />
           }
         />
-        <Route path="/users" element={<UserList users={users} />} />
+        <Route
+          path="/users"
+          element={
+            <Users
+              users={users}
+              posts={posts}
+              user={user}
+              onPostUpdated={handlePostUpdate}
+              onPostDeleted={handlePostDeleted}
+              onPostReacted={handlePostReacted}
+              onCommentAdded={handleCommentAdded}
+            />
+          }
+        />
         <Route path="/login" element={<Login setUser={setUser} />} />
         {/* <Route path="/about" element={<About />} /> */}
         <Route path="/signup" element={<Signup />} />

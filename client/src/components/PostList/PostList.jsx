@@ -9,6 +9,7 @@ import {
 } from "react-icons/fa";
 import "../../pages/Post/Post.css";
 import { reactToPost } from "../../services/api";
+import { createComment } from "../../services/api";
 
 const PostList = ({
   posts = [],
@@ -56,12 +57,19 @@ const PostList = ({
     }
   };
 
-  const handleAddComment = (postId) => {
+  const handleAddComment = async (postId) => {
     const text = commentInputs[postId]?.trim();
-    if (!text) return;
+    if (!text || !user) return;
+    try {
+      const newComment = await createComment(postId, text, user.token);
 
-    onCommentAdded(postId, text);
-    setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
+      if (onCommentAdded) {
+        onCommentAdded(postId, newComment);
+        setCommentInputs((prev) => ({ ...prev, [postId]: "" }));
+      }
+    } catch (err) {
+      console.error("Failed to add comment:", err);
+    }
   };
 
   const handleDeleteComment = async (commentId, postId) => {
@@ -104,7 +112,7 @@ const PostList = ({
     <section className="all-post-section">
       {posts.map((post) => {
         const counts = countReactions(post);
-        const postComments = comments?.[post.id] || [];
+        const postComments = post.comments || [];
 
         return (
           <div key={post.id} className="post">
