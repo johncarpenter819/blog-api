@@ -1,8 +1,5 @@
-const API_URL =
-  import.meta.env.VITE_API_URL ||
-  (import.meta.env.MODE === "development"
-    ? "http://localhost:5000/api"
-    : "https://blog-api-s5t6-izywwtuj4-johncarpenter819s-projects.vercel.app/api");
+const API_URL = import.meta.env.VITE_API_URL;
+if (!API_URL) console.error("VITE_API_URL is undefined!");
 
 export const loginUser = async (email, password) => {
   const res = await fetch(`${API_URL}/auth/login`, {
