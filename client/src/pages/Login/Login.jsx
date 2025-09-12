@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { loginUser } from "../../services/api";
 import "./Login.css";
 
 function Login({ setUser }) {
@@ -11,14 +12,14 @@ function Login({ setUser }) {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await fetch(`${API_URL}/login`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password }),
-      });
+      // const res = await fetch(`${API_URL}/login`, {
+      //   method: "POST",
+      //   headers: { "Content-Type": "application/json" },
+      //   body: JSON.stringify({ email, password }),
+      // });
 
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Login failed");
+      const data = await loginUser(email, password);
+      // if (!res.ok) throw new Error(data.message || "Login failed");
 
       sessionStorage.setItem("token", data.token);
       sessionStorage.setItem(
