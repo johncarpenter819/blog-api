@@ -1,5 +1,5 @@
-const API_URL = import.meta.env.REACT_APP_API_URL;
-if (!API_URL) console.error("VITE_API_URL is undefined!");
+const API_URL = process.env.REACT_APP_API_URL;
+if (!API_URL) console.error("REACT_APP_API_URL is undefined!");
 
 export const loginUser = async (email, password) => {
   const res = await fetch(`${API_URL}/auth/login`, {
