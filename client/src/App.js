@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchUsers, fetchPosts, updatePost } from "./services/api";
+import { fetchUsers, fetchPosts } from "./services/api";
 import PostPage from "./pages/Post/Post";
 import Navbar from "./components/Navbar/Navbar";
 import Footer from "./components/Footer/Footer";
@@ -10,7 +10,7 @@ import Users from "./pages/User/Users";
 import PostDetail from "./pages/Post/PostDetail";
 import "@fontsource/libertinus-keyboard";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import jwtDecode from "jwt-decode";
 import "./App.css";
 
 function App() {
@@ -49,10 +49,10 @@ function App() {
     }
 
     try {
-      const decodeedToken = jwtDecode(token);
+      const decodedToken = jwtDecode(token);
       const currentTime = Date.now() / 1000;
 
-      if (decodeedToken.exp < currentTime) {
+      if (decodedToken.exp < currentTime) {
         setUser(null);
         sessionStorage.removeItem("token");
         sessionStorage.removeItem("user");
@@ -60,7 +60,7 @@ function App() {
         return;
       }
 
-      const timeUntilExpiration = (decodeedToken.exp - currentTime) * 1000;
+      const timeUntilExpiration = (decodedToken.exp - currentTime) * 1000;
 
       const timer = setTimeout(() => {
         setUser(null);
@@ -82,19 +82,14 @@ function App() {
 
   useEffect(() => {
     const handleTabClose = () => {
-      const perfEntries = performance.getEntriesByType("navigation");
-      const isReload =
-        perfEntries.length > 0 && perfEntries[0].type === "reload";
-
-      if (!isReload) {
-        setUser(null);
-        sessionStorage.removeItem("token");
-        sessionStorage.removeItem("user");
-      }
+      sessionStorage.removeItem("token");
+      sessionStorage.removeItem("user");
+      setUser(null);
     };
 
-    window.addEventListener("beforeunload", handleTabClose);
-    return () => window.removeEventListener("beforeunload", handleTabClose);
+    window.addEventListener("unload", handleTabClose);
+
+    return () => window.removeEventListener("unload", handleTabClose);
   }, []);
 
   const handlePostCreated = (newPost) => {
