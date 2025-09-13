@@ -10,7 +10,7 @@ import Users from "./pages/User/Users";
 import PostDetail from "./pages/Post/PostDetail";
 import "@fontsource/libertinus-keyboard";
 import { Route, Routes, useNavigate } from "react-router-dom";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 import "./App.css";
 
 function App() {
