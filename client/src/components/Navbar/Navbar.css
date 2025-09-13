@@ -42,7 +42,7 @@
   list-style: none;
   margin: 0 auto;
   display: flex;
-  transform: translateX(150px);
+  transform: translateX(250px);
 }
 .nav-links a {
   color: #fff;

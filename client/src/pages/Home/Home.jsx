@@ -34,7 +34,11 @@ const TrendingSubsection = ({ title, posts }) => {
       <h3>{title}</h3>
       <div className="trending-cards">
         {posts.map((post) => (
-          <a key={post.id} href={`/posts/${post.id}`} className="trending-card">
+          <Link
+            key={post.id}
+            to={`/posts/${post.id}`}
+            className="trending-card"
+          >
             <h4>{post.title}</h4>
             <p className="card-author">By: {post.author?.username}</p>
             <p className="card-content">
@@ -44,7 +48,7 @@ const TrendingSubsection = ({ title, posts }) => {
                   : post.content
                 : ""}
             </p>
-          </a>
+          </Link>
         ))}
       </div>
     </div>

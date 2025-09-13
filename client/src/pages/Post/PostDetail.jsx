@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchPostById } from "../../services/api";
-import "./Post.css";
+import "./PostDetail.css";
 
 const PostDetail = () => {
   const [post, setPost] = useState(null);
