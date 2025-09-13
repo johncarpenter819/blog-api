@@ -80,17 +80,17 @@ function App() {
     }
   }, [navigate]);
 
-  useEffect(() => {
-    const handleTabClose = () => {
-      sessionStorage.removeItem("token");
-      sessionStorage.removeItem("user");
-      setUser(null);
-    };
+  // useEffect(() => {
+  //   const handleTabClose = () => {
+  //     sessionStorage.removeItem("token");
+  //     sessionStorage.removeItem("user");
+  //     setUser(null);
+  //   };
 
-    window.addEventListener("unload", handleTabClose);
+  //   window.addEventListener("unload", handleTabClose);
 
-    return () => window.removeEventListener("unload", handleTabClose);
-  }, []);
+  //   return () => window.removeEventListener("unload", handleTabClose);
+  // }, []);
 
   const handlePostCreated = (newPost) => {
     setPosts((prevPosts) => [newPost, ...prevPosts]);
